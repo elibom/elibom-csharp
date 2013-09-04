@@ -17,7 +17,7 @@ Add System.Web.Extensions framework reference to your project.
 
 2. Create an ElibomClient object passing your credentials:
 
-    ```net
+    ```c#
     using Elibom;
 
     ElibomClient elibom = new ElibomClient("your_email@domain.com", "your_api_token");
@@ -40,56 +40,56 @@ Add System.Web.Extensions framework reference to your project.
 * [Show Account](#show-account)
 
 ### Send SMS
-```net
+```c#
 //Return string
-string deliveryId = elibom.sendMessage('3201111111','NET - TEST');
+string deliveryId = elibom.sendMessage("3201111111","NET - TEST");
 ```
 
 ### Show Delivery
-```net
+```c#
 //Return dynamic
-var delivery = elibom.getDelivery('<delivery_token>');
+var delivery = elibom.getDelivery("<delivery_token>");
 Console.WriteLine(delivery["numFailed"]);
 foreach(var message in delivery["messages"]) {
-    Console.WriteLine(message");
+    Console.WriteLine("message");
     Console.WriteLine("To : " + message["to"]);
     Console.WriteLine("Operator : " + message["operator"]);
 }
 ```
 
 ### Schedule SMS 
-```net
+```c#
 //Return string
-string scheduleId  = elibom.scheduleMessage('3201111111', 'Test PHP', 'dd/MM/yyyy hh:mm');
+string scheduleId  = elibom.scheduleMessage("3201111111", "Test C#", "dd/MM/yyyy hh:mm");
 ```
 
 ### List Scheduled SMS Messages
-```net
+```c#
 //Return dynamic
 var scheduledMessages = elibom.getScheduledMessages();
 foreach(var schedule in scheduledMessage) {
-        Console.WriteLine(schedule);
+	Console.WriteLine(schedule);
 	Console.WriteLine(schedule["scheduledTime"]);
 }
 ```
 
 ### Show Scheduled SMS Message
-```net
+```c#
 //Return dynamic
-var schedule = elibom.getScheduledMessage('<schedule_id>');
+var schedule = elibom.getScheduledMessage("<schedule_id>");
 Console.WriteLine(schedule);
 //get scheduled time
 Console.WriteLine(schedule["scheduledTime"]);
 ```
 
 ### Cancel Scheduled SMS Message
-```net
+```c#
 //Void
-elibom.unscheduleMessage('<schedule_id>');
+elibom.unscheduleMessage("<schedule_id>");
 ```
 
 ### List Users
-```net
+```c#
 //Return dynamic
 var users = elibom.getUsers();
 foreach(var user in users) {
@@ -100,15 +100,15 @@ foreach(var user in users) {
 ```
 
 ### Show User
-```net
+```c#
 //Return dynamic
-var user = elibom.getUser('<user_id>');
+var user = elibom.getUser("<user_id>");
 Console.WriteLine(user);
 Console.WriteLine(user["name"]);
 ```
 
 ### Show Account
-```net
+```c#
 //Return dynamic
 var account = elibom.getAccount();
 Console.WriteLine(account);
