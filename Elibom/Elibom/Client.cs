@@ -21,6 +21,7 @@ namespace Elibom
         public dynamic get(string resource, Dictionary<string, string> data)
         {
             string uri = URL + resource;
+            Console.WriteLine(uri);
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = "GET";
             if (data != null) {
@@ -66,9 +67,7 @@ namespace Elibom
             string credentials = this.User + ":" + this.Token;
             Console.WriteLine(credentials);
             string auth = EncodeTo64(credentials);
-            Console.WriteLine(auth);
             request.Headers["Authorization"] = "Basic " + auth;
-            Console.WriteLine("Basic " + auth);
         }
 
         private static string EncodeTo64(string toEncode)

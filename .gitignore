@@ -7,5 +7,6 @@ Elibom/Elibom/Properties/
 Elibom/Elibom/Service References/
 Elibom/Elibom/Elibom.csproj
 Elibom/Elibom/packages.config
+*.suo
 
 
