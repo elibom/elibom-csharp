@@ -67,5 +67,12 @@ namespace Elibom
             dynamic users = userController.getAll();
             return users;
         }
+
+        public dynamic getAccount()
+        {
+            Account accountController = new Account(this.User, this.Token);
+            dynamic account = accountController.get();
+            return account;
+        }
      }
 }
