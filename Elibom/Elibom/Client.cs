@@ -11,7 +11,7 @@ namespace Elibom
 {
     class Client : Resource
     {
-        private string URL = "http://www.elibom.com/";
+        private string URL = "https://www.elibom.com/";
 
         public Client(string user, string token)
             : base(user, token)
