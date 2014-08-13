@@ -53,6 +53,7 @@ namespace Elibom
 
         private dynamic makeRequest(HttpWebRequest request)
         {
+            request.KeepAlive = false; 
             request.ServicePoint.Expect100Continue = false;
             setAuthorizationHeader(request);
             request.ContentType = "text/json";
