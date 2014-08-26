@@ -70,6 +70,7 @@ namespace Elibom
             Console.WriteLine(credentials);
             string auth = EncodeTo64(credentials);
             request.Headers["Authorization"] = "Basic " + auth;
+            request.Headers["X-API-Source"] = "csharp-1.0.5"; 
         }
 
         private static string EncodeTo64(string toEncode)
