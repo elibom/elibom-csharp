@@ -49,6 +49,12 @@ Add System.Web.Extensions framework reference to your project.
 string deliveryId = elibom.sendMessage("3201111111","NET - TEST");
 ```
 
+### Send SMS with a campaign name
+```c#
+//Return string
+string deliveryId = elibom.sendMessage("3201111111","NET - TEST", "Campaign name");
+```
+
 ### Show Delivery
 ```c#
 //Return dynamic
@@ -65,6 +71,12 @@ foreach(var message in delivery["messages"]) {
 ```c#
 //Return string
 string scheduleId  = elibom.scheduleMessage("3201111111", "Test C#", "dd/MM/yyyy hh:mm");
+```
+
+### Schedule SMS with a campaign name 
+```c#
+//Return string
+string scheduleId  = elibom.scheduleMessage("3201111111", "Test C#", "dd/MM/yyyy hh:mm", "Campaign name");
 ```
 
 ### List Scheduled SMS Messages
