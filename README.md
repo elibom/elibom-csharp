@@ -12,11 +12,11 @@ Add System.Web.Extensions framework reference to your project.
 
 1. Install
     
-    Like a NuGet package https://www.nuget.org/packages/Elibom/1.0.4
+    Like a NuGet package https://www.nuget.org/packages/Elibom/1.0.6
 
     or
     
-    download .dll file https://github.com/elibom/elibom-csharp/releases/download/1.0.5/Elibom.dll and add it like 
+    download .dll file https://github.com/elibom/elibom-csharp/releases/download/1.0.6/Elibom.dll and add it like 
     reference in your project.
 
 2. Create an ElibomClient object passing your credentials:

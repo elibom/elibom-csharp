@@ -18,12 +18,27 @@ namespace Elibom
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("destinations", to);
             data.Add("text", text);
+            
 
-            Client client = new Client(this.User, this.Token);
-            dynamic json = client.post("messages/", data);
-         
-            return json["deliveryToken"];
+            return this.send(data);
         }
 
+        public String send(string to, string text, string campaign)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("destinations", to);
+            data.Add("text", text);
+            data.Add("campaign", campaign);
+
+            return this.send(data);
+        }
+
+        private String send(Dictionary<string, string> data)
+        {
+            Client client = new Client(this.User, this.Token);
+            dynamic json = client.post("messages/", data);
+
+            return json["deliveryToken"];
+        }
     }
 }

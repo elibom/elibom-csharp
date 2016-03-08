@@ -20,10 +20,27 @@ namespace Elibom
             data.Add("text", txt);
             data.Add("scheduledDate", date);
 
+            return this.schedule(data);
+        }
+
+        public string schedule(string to, string txt, string date, string campaign)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("destinations", to);
+            data.Add("text", txt);
+            data.Add("scheduledDate", date);
+            data.Add("campaign", campaign);
+
+            return this.schedule(data);
+        }
+
+        private string schedule(Dictionary<string, string> data)
+        {
             Client client = new Client(this.User, this.Token);
             dynamic schedule = client.post("messages/", data);
 
             return schedule["scheduleId"];
+
         }
 
         public dynamic get(string id)

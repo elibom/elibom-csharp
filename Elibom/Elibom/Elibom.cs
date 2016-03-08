@@ -20,6 +20,12 @@ namespace Elibom
             return message.send(to, txt);
         }
 
+        public string sendMessage(string to, string txt, string campaign)
+        {
+            Message message = new Message(this.User, this.Token);
+            return message.send(to, txt, campaign);
+        }
+
         public dynamic getDelivery(string id) 
         {
             Delivery deliveryController = new Delivery(this.User, this.Token);
@@ -31,6 +37,12 @@ namespace Elibom
         {
             Schedule scheduleController = new Schedule(this.User, this.Token);
             return scheduleController.schedule(to, txt, date);
+        }
+
+        public string scheduleMessage(string to, string txt, string date, string campaign)
+        {
+            Schedule scheduleController = new Schedule(this.User, this.Token);
+            return scheduleController.schedule(to, txt, date, campaign);
         }
 
         public dynamic getScheduledMessage(string id)
