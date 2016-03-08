@@ -13,6 +13,8 @@ namespace Elibom
     {
         private string URL = "https://www.elibom.com/";
 
+        private string version = "csharp-1.0.6";
+
         public Client(string user, string token)
             : base(user, token)
         {
@@ -21,7 +23,6 @@ namespace Elibom
         public dynamic get(string resource, Dictionary<string, string> data)
         {
             string uri = URL + resource;
-            Console.WriteLine(uri);
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = "GET";
             if (data != null) {
@@ -67,10 +68,9 @@ namespace Elibom
         private void setAuthorizationHeader(HttpWebRequest request)
         {
             string credentials = this.User + ":" + this.Token;
-            Console.WriteLine(credentials);
             string auth = EncodeTo64(credentials);
             request.Headers["Authorization"] = "Basic " + auth;
-            request.Headers["X-API-Source"] = "csharp-1.0.5"; 
+            request.Headers["X-API-Source"] = this.version; 
         }
 
         private static string EncodeTo64(string toEncode)
