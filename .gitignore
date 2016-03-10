@@ -7,6 +7,10 @@ Elibom/Elibom/Properties/
 Elibom/Elibom/Service References/
 Elibom/Elibom/Elibom.csproj
 Elibom/Elibom/packages.config
+Elibom/Tests/bin/
+Elibom/Tests/obj/
+Elibom/Tests/Properties/
 *.suo
+*.csproj
 
 

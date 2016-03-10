@@ -7,65 +7,60 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
-namespace Elibom
+namespace Elibom.APIClient
 {
-    class Client : Resource
+    public class RestClient
     {
         private string URL = "https://www.elibom.com/";
 
         private string version = "csharp-1.0.6";
 
-        public Client(string user, string token)
-            : base(user, token)
+        private string User;
+
+        private string Token;
+
+        public RestClient(string user, string token)
         {
+            this.User = user;
+            this.Token = token;
         }
 
         public dynamic get(string resource, Dictionary<string, string> data)
         {
-            string uri = URL + resource;
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "GET";
-            if (data != null) {
-                setJsonToRequest(dataToString(data), request.GetRequestStream());
-            }
-
-            return makeRequest(request);            
+            HttpWebRequest request = createRequest(resource, "GET", data);
+            return executeRequest(request);            
         }
 
         public dynamic post(string resource, Dictionary<string, string> data)
         {
-            string uri = URL + resource;
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "POST";
-            setJsonToRequest(dataToString(data), request.GetRequestStream());
-
-            return makeRequest(request);
+            HttpWebRequest request = createRequest(resource, "POST", data);
+            return executeRequest(request);
         }
 
         public dynamic delete(string resource, Dictionary<string, string> data)
         {
-            string uri = URL + resource;
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "DELETE";
-            setJsonToRequest(dataToString(data), request.GetRequestStream());
-
-            return makeRequest(request);
+            HttpWebRequest request = createRequest(resource, "DELETE", data);
+            return executeRequest(request);
         }
 
-        private dynamic makeRequest(HttpWebRequest request)
+        private HttpWebRequest createRequest(string resource, string method, Dictionary<string, string> data)
         {
-            request.KeepAlive = false; 
+            string uri = URL + resource;
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = method;
+            request.KeepAlive = false;
             request.ServicePoint.Expect100Continue = false;
             setAuthorizationHeader(request);
             request.ContentType = "text/json";
-            var response = (HttpWebResponse)request.GetResponse();
-            string body = responseAsString(response.GetResponseStream());
-            dynamic dataResponse = buildDynamic(body);
+            if (data != null)
+            {
+                setJsonToRequest(dataToString(data), request.GetRequestStream());
+            }
 
-            return dataResponse;
+            return request;
         }
 
-        private void setAuthorizationHeader(HttpWebRequest request)
+        protected void setAuthorizationHeader(HttpWebRequest request)
         {
             string credentials = this.User + ":" + this.Token;
             string auth = EncodeTo64(credentials);
@@ -73,7 +68,7 @@ namespace Elibom
             request.Headers["X-API-Source"] = this.version; 
         }
 
-        private static string EncodeTo64(string toEncode)
+        protected static string EncodeTo64(string toEncode)
         {
             byte[] toEncodeAsBytes = System.Text.Encoding.UTF8.GetBytes(toEncode);
             string result = Convert.ToBase64String(toEncodeAsBytes);
@@ -81,7 +76,7 @@ namespace Elibom
             return result;
         }
 
-        private void setJsonToRequest(string json, Stream stream)
+        protected virtual void setJsonToRequest(string json, Stream stream)
         {
             var streamWritter = new StreamWriter(stream);
             streamWritter.Write(json);
@@ -89,26 +84,35 @@ namespace Elibom
             streamWritter.Close();
         }
 
-        private string responseAsString(Stream stream)
+        protected string responseAsString(Stream stream)
         {
             var streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
         }
 
-        private dynamic buildDynamic(string body)
+        protected dynamic buildDynamic(string body)
         {
             var jss = new JavaScriptSerializer();
             dynamic data = jss.Deserialize<dynamic>(body);
             return data;
         }
 
-        private string dataToString(Dictionary<string, string> data)
+        protected string dataToString(Dictionary<string, string> data)
         {
             StringBuilder sb = new StringBuilder();
             var jss = new JavaScriptSerializer();
             jss.Serialize(data, sb);
 
             return sb.ToString();
+        }
+
+        protected virtual dynamic executeRequest(HttpWebRequest request)
+        {
+            var response = (HttpWebResponse)request.GetResponse();
+            string body = responseAsString(response.GetResponseStream());
+            dynamic dataResponse = buildDynamic(body);
+
+            return dataResponse;
         }
     }
 }
