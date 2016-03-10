@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elibom 
+namespace Elibom.APIClient.Resources
 {
     class Schedule : Resource
     {
-        public Schedule(string user, string token)
-            : base(user, token)
-        {
-        }
+        public Schedule(RestClient client):base(client) { }
 
         public string schedule(string to, string txt, string date) 
         {
@@ -36,32 +33,27 @@ namespace Elibom
 
         private string schedule(Dictionary<string, string> data)
         {
-            Client client = new Client(this.User, this.Token);
-            dynamic schedule = client.post("messages/", data);
+            dynamic schedule = this.ApiClient.post("messages/", data);
 
             return schedule["scheduleId"];
-
         }
 
         public dynamic get(string id)
         {
-            Client client = new Client(this.User, this.Token);
-            dynamic schedule = client.get("schedules/" + id, null);
+            dynamic schedule = this.ApiClient.get("schedules/" + id, null);
 
             return schedule;
         }
 
         public dynamic getAll()
         {
-            Client client = new Client(this.User, this.Token);
-            dynamic schedules = client.get("schedules/scheduled", null);
+            dynamic schedules = this.ApiClient.get("schedules/scheduled", null);
             return schedules;
         }
 
         public void unschedule(string id)
         {
-            Client client = new Client(this.User, this.Token);
-            client.delete("schedules/" + id, null);
+            this.ApiClient.delete("schedules/" + id, null);
         }
     }
 }

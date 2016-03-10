@@ -4,19 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elibom
+namespace Elibom.APIClient.Resources
 {
     class Delivery : Resource
     {
-        public Delivery(string user, string token)
-            : base(user, token)
-        {
-        }
+        public Delivery(RestClient client):base(client) { }
 
         public dynamic get(string id) 
         {
-            Client client = new Client(this.User, this.Token);
-            dynamic json = client.get("messages/" + id, null);
+            dynamic json = this.ApiClient.get("messages/" + id, null);
 
             return json;
         }
